@@ -40,5 +40,5 @@ Strong prose may provoke extreme mental exertion. Reader discretion is strongly 
 ```
 
 ```danger
-Mad scientist at work!
+Mad scientist at work! 도대체 어케함...ㅅㅂ
 ```
