@@ -10,7 +10,7 @@
     <script type="module">
       async function run() {
         // Load WebAssembly module
-        const { Ball } = await import('./wasm_test.wasm');
+        const { Ball } = await import('https://raw.githubusercontent.com/Shbyoun/Shbyoun.github.io/main/./wasm_test.wasm');
 
         // Create a new Ball instance
         const ball = new Ball(0, 0, 2, 2);
