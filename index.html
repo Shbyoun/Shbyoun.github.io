@@ -1,8 +1,48 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
-</head>
-<body>
-HI
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Ball Bouncer</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="300"></canvas>
+
+    <script type="module">
+      async function run() {
+        // Load WebAssembly module
+        const { Ball } = await import('./wasm_test.wasm');
+
+        // Create a new Ball instance
+        const ball = new Ball(0, 0, 2, 2);
+
+        // Get the canvas element
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        function update() {
+          // Clear the canvas
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Update and render the ball
+          ball.update();
+          ball.render();
+
+          // Draw the ball on the canvas
+          ctx.beginPath();
+          ctx.arc(ball.x, ball.y, 10, 0, Math.PI * 2);
+          ctx.fillStyle = 'red';
+          ctx.fill();
+          ctx.closePath();
+
+          // Schedule the next frame
+          requestAnimationFrame(update);
+        }
+
+        // Start the animation loop
+        update();
+      }
+
+      run();
+    </script>
+  </body>
 </html>
