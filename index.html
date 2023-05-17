@@ -11,7 +11,10 @@
       async function run() {
         // Load WebAssembly module
 		//Test1
-        const { Ball } = await fetch('https://raw.githubusercontent.com/Shbyoun/Shbyoun.github.io/main/wasm_test.wasm');
+        const response = await fetch('https://raw.githubusercontent.com/Shbyoun/Shbyoun.github.io/main/wasm_test.wasm');
+		const wasmBytes = await response.arrayBuffer();
+		const wasmModule = await WebAssembly.instantiate(wasmBytes);
+		const { Ball } = wasmModule.instance.exports;
 
         // Create a new Ball instance
         const ball = new Ball(0, 0, 2, 2);
