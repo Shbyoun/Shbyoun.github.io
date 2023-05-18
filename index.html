@@ -10,9 +10,20 @@
     <script type="module">
       async function run() {
         // Load WebAssembly module
-        const response = await fetch('https://raw.githubusercontent.com/Shbyoun/Shbyoun.github.io/main/wasm_test.wasm');
+        const response = await fetch('wasm_test.wasm');
         const wasmBytes = await response.arrayBuffer();
-        const wasmModule = await WebAssembly.instantiate(wasmBytes, {});
+
+        // Create imports object
+        const imports = {
+          __wbindgen_placeholder__: {
+            log: function(sptr, slen) {
+              const message = new TextDecoder().decode(new Uint8Array(wasmBytes, sptr, slen));
+              console.log(message);
+            },
+          },
+        };
+
+        const wasmModule = await WebAssembly.instantiate(wasmBytes, imports);
 
         // Extract exports from the module
         const { Ball } = wasmModule.instance.exports;
