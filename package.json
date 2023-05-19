@@ -1,0 +1,17 @@
+{
+  "name": "wasm-0519",
+  "collaborators": [
+    "Shbyoun <96978519+Shbyoun@users.noreply.github.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "wasm_0519_bg.wasm",
+    "wasm_0519.js",
+    "wasm_0519.d.ts"
+  ],
+  "module": "wasm_0519.js",
+  "types": "wasm_0519.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

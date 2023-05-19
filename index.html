@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>발표용</title>
+</head>
+<body>
+    <h1 id = "counter"></h1>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script type="module">
+        let count = 0;
+        import init, { generate_ball } from "./wasm_0519.js";
+
+        const canvas = document.getElementById('canvas');
+        const counter = document.getElementById('counter');
+        canvas.addEventListener('click',(event) =>{
+            generate_ball(canvas,event);
+            counter.textContent = count;
+            count++;
+        });
+        init();
+    </script>
+</body>
+</html>
