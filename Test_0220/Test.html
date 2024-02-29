@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>wasm_test</title>
+</head>
+
+<body>
+  <button onclick="runWasm()" id="callCheck1Button">Call Check1</button>
+  <script>
+    
+    async function runWasm() {
+        // Rust로 작성된 웹 어셈블리 모듈을 로드
+        const { instance } = await WebAssembly.instantiateStreaming(fetch('./pkg/Validate_bg.wasm'), {});
+
+        // Rust에서 정의한 함수 호출 (예: my_function)
+        instance.exports.my_function();
+    }
+    function test2() {
+      fetch("./pkg/Validate_bg.wasm").then(Response => {
+        return Response.arrayBuffer();
+      }).then(bytes => {
+        console.log("Response.arrayBuffer Complete");
+        return WebAssembly.instantiate(bytes);
+      }).then(obj => {
+        console.log("WebAssembly.instantiate Complete");     
+        const result = obj.instance.exports.check1();
+        console.log("Returned value:", result.toString());
+      }).catch(error => {
+        console.error("Exception : " +error);
+      });      
+    }
+  </script>
+</body>
+</html>
+
+// const fetchResult = await fetch("./pkg/Validate_bg.wasm");
+// const bytes = await fetchResult.arrayBuffer();
+// await WebAssembly.instantiate(bytes,importObject);
+// fetch("./pkg/Validate_bg.wasm").then(Response => Response.arrayBuffer()).then(
+//   bytes => WebAssembly.instantiate(bytes, importObject).then(
+//     (obj) => {
+//       wasmInstance = obj;
+//     }
+//   ),function(Fail_reson){
+//      console.log("Fail");
+//   }
+// )
+
+<!-- <button onclick="test2()" id="callCheck1Button">Call Check2</button> -->
+
+function test1() {
+  console.log(importObject.instance.exports.check1());
+}
+
+validate_value_provided: function(value, msg_err, msg_err_buffer) {
+  console.log("Call validate_value_provided");
+},
+// let wasmInstance;
+
+// console.log("Call instantiateStreaming1");
+// WebAssembly.instantiateStreaming(fetch("./pkg/Validate_bg.wasm"), importObject).then(
+//   (obj) => {
+//     console.log("Call instantiateStreaming2");
+//     const result = obj.instance.exports.ValidateValueProvided(null, "Msg_Err", "Msg_Err_Buffer");
+//     console.log("Returned value:", result);
+//     console.log("Call instantiateStreaming3");
+//     obj.instance.exports.Check1(); // Check1 함수 호출
+//     console.log("Call instantiateStreaming4");
+//     wasmInstance = obj;
+//   }
+// );
+// 위에 문제점 node.js와 같이 지원이 되지않는 형태이기에 old 방식으로 사용해야함
