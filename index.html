@@ -92,7 +92,7 @@
             }
         };
 
-        const mod_path = '../pkg/Validate_bg.wasm';
+        const mod_path = './Validate_bg.wasm';
         WebAssembly.instantiateStreaming(fetch(mod_path), importObject)
             .then(results => {
                 console.log("Wasm instance created.");
